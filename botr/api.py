@@ -17,14 +17,11 @@ __version__ = '1.2'
 import hashlib
 import pickle
 import random
-import StringIO
+import io
 import time
 import urllib
 
-try:
-    import pycurl as request
-except ImportError:
-    import urllib2 as request
+import urllib.request as request
 
 
 class API(object):
@@ -93,7 +90,7 @@ class API(object):
             curl.setopt(request.HTTPGET, 1)
 
             # Write response to a string
-            output = StringIO.StringIO()
+            output = io.StringIO()
             curl.setopt(request.WRITEFUNCTION, output.write)
 
             curl.perform()
@@ -103,7 +100,7 @@ class API(object):
         elif request.__name__ == 'urllib2':
             try:
                 response = request.urlopen(url, query).read()
-            except request.URLError, e:
+            except request.URLError as e:
                 try:
                     error_code = e.code
                     response = e.read()
@@ -148,7 +145,7 @@ class API(object):
                 curl.setopt(request.PROGRESSFUNCTION, self._progress)
 
             # Have the response written back to a string
-            output = StringIO.StringIO()
+            output = io.StringIO()
             curl.setopt(request.WRITEFUNCTION, output.write)
 
             curl.perform()
@@ -158,7 +155,7 @@ class API(object):
         elif request.__name__ == 'urllib2':
             try:
                 response = request.urlopen(url, urllib.urlencode(args)).read()
-            except request.URLError, e:
+            except request.URLError as e:
                 try:
                     error_code = e.code
                     response = e.read()
