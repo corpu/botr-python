@@ -12,7 +12,7 @@
 # For the System API documentation see http://docs.bitsontherun.com/system-api
 #-----------------------------------------------------------------------------
 
-__version__ = '1.1'
+__version__ = '1.2'
 
 import hashlib
 import pickle
